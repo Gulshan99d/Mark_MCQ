@@ -6,7 +6,7 @@ const students = [
 	{ name: 'Gulshan Kumar Pathak', id: '1' },
 	{ name: 'Prince', id: '2' },
 	{ name: 'Ritesh', id: '3' },
-	{ name: 'Ekam Jot', id: '4' },
+	{ name: 'Ekam Jot', id: '4' }
 ];
 
 let editable = false;
@@ -89,7 +89,7 @@ function showResultsTable() {
 
 function continueMarking() {
 	btns.classList.remove('hidden');
-        editable = false;
+	ToggleEdit();
 	document.getElementById('resultsTable').style.display = 'none';
 	document.getElementById('continueBtn').classList.add('hidden');
 	document.getElementById('edit').classList.add('hidden');
