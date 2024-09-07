@@ -17,15 +17,14 @@ body {
 	margin-bottom: 20px;
 }
 
-.buttons button:hover {
-	background-color: #1ea05d;
+#effet {
+	display: none;
 }
 
 .buttons button {
 	padding: 8px 20px;
 	margin: 5px;
 	font-size: 18px;
-	background-color: #54e09d;
 	color: white;
 	border: 2px solid transparent;
 	border-radius: 6px;
@@ -55,14 +54,14 @@ table {
 th,
 td {
 	padding: 10px;
-	border: 1px solid #54e09d;
+	border: 2px solid #565656;
 	text-align: center;
 }
 
 .submit {
 	height: 35px;
 	min-width: 20vw;
-	margin: 20px 8px;
+	margin: 10px 8px;
 	background-color: #54e09d;
 	font-size: 1rem;
 	border-radius: 2px;
@@ -70,7 +69,42 @@ td {
 	align-items: center;
 	justify-content: center;
 	color: #fff;
+	transition:
+		background-color,
+		color,
+		box-shadow 0.2s ease-in;
 	border: none;
+}
+
+.submit:hover {
+	border: 2px solid #54e09d;
+	color: #54e09d;
+	background-color: #fff;
+	box-shadow: 0 5px 20px 1px #54e09dc0;
+	animation: scaling 0.2s ease-in-out;
+}
+
+.submit.active {
+	border: 2px solid #e43a57;
+	color: #e43a57;
+	background-color: #fff;
+	box-shadow: 0 5px 20px 1px #e43a57b1;
+}
+
+#right {
+	background-color: #54e09d;
+	color: #eee;
+}
+
+#right:hover {
+	background-color: #1ea05d;
+	border: 2px solid #1ea05d;
+}
+
+.tableWrapper {
+	max-height: 70vh;
+	margin-top: 20px;
+	overflow-y: scroll;
 }
 
 input {
@@ -94,8 +128,19 @@ input:focus {
 
 #wrong {
 	background-color: #e43a57;
+	color: #eee;
 }
 
 #wrong:hover {
 	background-color: #af0d29;
+	border: 2px solid #af0d29;
+}
+
+@keyframes scaling {
+	50% {
+		transform: scale(1.1);
+	}
+	100% {
+		transform: scale(1);
+	}
 }
