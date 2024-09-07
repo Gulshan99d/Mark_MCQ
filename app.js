@@ -34,7 +34,7 @@ let currentStudent = 0;
 const btns = document.querySelector('.buttons');
 function markAnswer(result) {
 	const effect = document.createElement('audio');
-	effect.setAttribute('src', 'wav);
+	effect.setAttribute('src', 'effect.wav);
 	effect.play();
 	currentMarks.push(result);
 
