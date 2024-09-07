@@ -89,7 +89,8 @@ function showResultsTable() {
 
 function continueMarking() {
 	btns.classList.remove('hidden');
-	ToggleEdit();
+	if(editable) {
+	ToggleEdit();} 
 	document.getElementById('resultsTable').style.display = 'none';
 	document.getElementById('continueBtn').classList.add('hidden');
 	document.getElementById('edit').classList.add('hidden');
