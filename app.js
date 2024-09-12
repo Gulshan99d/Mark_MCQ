@@ -1,12 +1,25 @@
 let currentQuestion = 1;
 let currentMarks = [];
-const finalResults = [];
-const totalQuestions = 10;
+const totalQuestions = 80;
+let markquestion = {};
+
+for (let i = 1; i <= totalQuestions; i++) {
+	markquestion[i] = {};
+	markquestion[i].correct = 0;
+	markquestion[i].wrong = 0;
+}
+
 const students = [
 	{ name: 'Gulshan Kumar Pathak', id: '1' },
 	{ name: 'Prince', id: '2' },
 	{ name: 'Ritesh', id: '3' },
-	{ name: 'Ekam Jot', id: '4' }
+	{ name: 'Ekam Jot', id: '4' },
+	{ name: 'Himanshu', id: '5' },
+	{ name: 'Vishal', id: '6' },
+	{ name: 'KaramPreet', id: '7' },
+	{ name: 'Nihal', id: '8' },
+	{ name: 'Sourabh', id: '9' },
+	{ name: 'Anoop', id: '10' }
 ];
 
 let editable = false;
@@ -28,10 +41,12 @@ for (let i = 0; i <= totalQuestions; i++) {
 		cell.innerText = `Que ${i}`;
 	}
 }
+let totalcolumn = row.insertCell(totalQuestions + 2);
+totalcolumn.innerText = 'Total';
 
 let currentStudent = 0;
-
 const btns = document.querySelector('.buttons');
+
 function markAnswer(result) {
 	const effect = document.createElement('audio');
 	effect.setAttribute('src', 'effect.wav');
@@ -57,6 +72,7 @@ function showResultsTable() {
 	const table = document
 		.getElementById('resultsTable')
 		.getElementsByTagName('tbody')[0];
+
 	function renderMarks() {
 		table.innerHTML = '';
 		currentMarks.forEach((result, index) => {
@@ -80,6 +96,15 @@ function showResultsTable() {
 				}
 			});
 		});
+		let score = 0;
+		currentMarks.forEach((entry) => {
+			score += entry.toLowerCase() === 'right' ? 1 : 0;
+		});
+		let finalRow = table.insertRow();
+		let totalCol = finalRow.insertCell(0);
+		let total = finalRow.insertCell(1);
+		totalCol.innerText = 'Total';
+		total.innerText = score + '';
 	}
 	renderMarks();
 	document.getElementById('resultsTable').style.display = 'table';
@@ -89,17 +114,52 @@ function showResultsTable() {
 
 function continueMarking() {
 	btns.classList.remove('hidden');
-	if(editable) {
-	ToggleEdit();} 
-	document.getElementById('resultsTable').style.display = 'none';
-	document.getElementById('continueBtn').classList.add('hidden');
-	document.getElementById('edit').classList.add('hidden');
+	if (editable) {
+		ToggleEdit();
+	}
 
-	// Add data to the hidden final results table
+	currentMarks.forEach((item, i) => {
+		if (item.toLowerCase() === 'right') {
+			markquestion[i + 1].correct += 1;
+		} else {
+			markquestion[i + 1].wrong += 1;
+		}
+	});
+	console.log(markquestion);
+
 	const finalTable = document
 		.getElementById('finalResultsTable')
 		.getElementsByTagName('tbody')[0];
-	let row = finalTable.insertRow();
+
+	if (currentStudent === students.length) {
+		let row = finalTable.insertRow(students.length - 1);
+		let row2 = finalTable.insertRow(students.length);
+		let totalCell = row.insertCell(0);
+		let totalwrong = row2.insertCell(0);
+		let flasecell = row.insertCell(1);
+		let flasecell2 = row2.insertCell(1);
+		flasecell.innerText = ' ';
+		flasecell2.innerText = ' ';
+		totalCell.innerText = 'correct';
+		totalwrong.innerText = 'wrong';
+		for (let i = 0; i < totalQuestions; i++) {
+			let correct = row.insertCell(i + 2);
+			let marks = markquestion[i + 1];
+			correct.innerText = marks.correct + '';
+			let wrong = row2.insertCell(i + 2);
+			wrong.innerText = marks.wrong + '';
+		}
+		let lastFasle = row.insertCell(totalQuestions + 2);
+		let lastFasleWrong = row2.insertCell(totalQuestions + 2);
+		lastFasleWrong.innerText = ' ';
+		lastFasle.innerText = ' ';
+	}
+
+	document.getElementById('resultsTable').style.display = 'none';
+	document.getElementById('edit').classList.add('hidden');
+
+	// Add data to the final results table
+	let row = finalTable.insertRow(currentStudent - 1);
 	let nameCell = row.insertCell(0);
 	let idCell = row.insertCell(1);
 	nameCell.innerText = students[currentStudent - 1].name;
@@ -110,10 +170,14 @@ function continueMarking() {
 		let cell = row.insertCell(index + 2);
 		cell.innerText = data;
 	});
+	let totalCell = row.insertCell(currentMarks.length + 2);
+	let score = 0;
+	currentMarks.forEach((entry) => {
+		score += entry.toLowerCase() === 'right' ? 1 : 0;
+	});
+	totalCell.innerText = score + '';
 
 	// Clear inputs for next entry
-	document.getElementById('studentName').textContent =
-		students[currentStudent].name;
 	currentMarks = [];
 	currentQuestion = 1;
 	document.getElementById('questionNumber').classList.remove('hidden');
@@ -121,6 +185,15 @@ function continueMarking() {
 	document.getElementById('continueBtn').classList.add('hidden');
 	document.getElementById('resultsTable').style.display = 'none';
 	document.getElementById('questionNumber').innerText = 'Question 1';
+	if (currentStudent < students.length) {
+		document.getElementById('studentName').textContent =
+			students[currentStudent].name;
+	} else {
+		document.getElementById('studentName').textContent = 'Download the file';
+		document.getElementById('questionNumber').classList.add('hidden');
+		document.getElementById('right').classList.add('hidden');
+		document.getElementById('wrong').classList.add('hidden');
+	}
 }
 
 document.getElementById('studentName').textContent =
