@@ -122,8 +122,14 @@ input:focus {
 	border: 1px solid #54e09d;
 }
 
-.hidden {
-	display: none;
+#finalResultsTable tr td {
+	max-height: 19px;
+	max-width: 50px;
+	min-width: 50px;
+	min-height: 19px;
+	height: 19px;
+	width: 50px;
+	overflow: scroll;
 }
 
 #wrong {
@@ -134,6 +140,11 @@ input:focus {
 #wrong:hover {
 	background-color: #af0d29;
 	border: 2px solid #af0d29;
+}
+
+.hidden {
+	display: none;
+	background-color: #ccc;
 }
 
 @keyframes scaling {
