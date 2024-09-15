@@ -207,7 +207,7 @@ function startApp() {
 	document.querySelector('#showTable').addEventListener('click', showTable);
 	document.querySelector('#edit').addEventListener('click', toggleEdit);
 	document.querySelector('#right').addEventListener('click', () => {
-	  markAnswer('Right')
+		markAnswer('Right');
 	});
 	document.querySelector('#wrong').addEventListener('click', () => {
 		markAnswer('Wrong');
@@ -220,16 +220,18 @@ function startApp() {
 		.addEventListener('click', downloadResults);
 }
 
+let studentsArray = [];
+
 document.getElementById('studentInput').addEventListener('input', function () {
 	const input = this.value.trim();
-	const studentNames = input.split(/\s+/); // Split by spaces
+	const studentNames = input.split(/\r?\n/).map((elem) => elem.trim()); // Split by spaces
 	const studentList = document.getElementById('studentList');
 
 	studentList.scrollTop = studentList.scrollHeight;
 
 	studentList.innerHTML = ''; // Clear previous list
 
-	let studentsArray = studentNames.map((name, index) => ({
+	studentsArray = studentNames.map((name, index) => ({
 		name: name,
 		id: (index + 1).toString()
 	}));
@@ -242,13 +244,9 @@ document.getElementById('studentInput').addEventListener('input', function () {
 });
 
 document.querySelector('.next').addEventListener('click', function (e) {
-	let names = document.getElementById('studentInput').value;
 	document.querySelector('.container').classList.remove('hidden');
 	document.querySelector('.infoView').classList.add('hidden');
-	const namesArray = names.trim().split(/\s+/);
-	students = namesArray.map((name, index) => ({
-		name: name,
-		id: (index + 1).toString()
-	}));
+	students = studentsArray;
+	console.log(studentsArray);
 	startApp();
 });
