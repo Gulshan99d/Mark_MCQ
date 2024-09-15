@@ -107,7 +107,7 @@ td {
 	overflow-y: scroll;
 }
 
-input {
+textarea {
 	height: 30px;
 	width: 50vw;
 	margin: 20px 5px;
@@ -116,10 +116,12 @@ input {
 	border: 1px solid #ccc;
 	outline: none;
 	transition: border 0.1s linear;
+	resize: none;
 }
 
-input:focus {
+textarea:focus {
 	border: 1px solid #54e09d;
+	outline: none;
 }
 
 #finalResultsTable tr td {
@@ -152,6 +154,8 @@ h2 {
 
 .inputs {
 	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 input {
